@@ -5,6 +5,7 @@ namespace App;
 use App\Models\Answer;
 use App\Models\City;
 use App\Models\College;
+use App\Models\Country;
 use App\Models\District;
 use App\Models\Education;
 use App\Models\QuestionAnswerUser;
@@ -31,7 +32,7 @@ class User extends Authenticatable
         'is_block', 'is_wait', 'phone_Code', 'phone', 'country_id', 'gov_id',
         'city_id', 'lastLoginAt', 'religion_id', 'password',
         'about_you', 'about_partner', 'district_id', 'education_id', 'universty_id', 'college_id',
-        'birth_date', 'points'
+        'birth_date', 'points', 'identity_face', 'identity_back','passport_image', 'is_approved'
     ];
 
     public function universty(){
@@ -40,6 +41,9 @@ class User extends Authenticatable
 
     public function education(){
         return $this->belongsTo(Education::class, 'education_id');
+    }
+    public function country(){
+        return $this->belongsTo(Country::class, 'country_id');
     }
     public function city(){
         return $this->belongsTo(City::class, 'city_id');

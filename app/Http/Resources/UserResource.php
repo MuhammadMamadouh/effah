@@ -27,7 +27,7 @@ class UserResource extends JsonResource
             // 'idNumber' => $this->idNumber,
             'images' => ImageResource::collection($this->images),
             'is_login' => $this->is_login,
-            'gender' => $this->gender == Gender::MALE ? 'male' : 'female',
+            'gender' => $this->gender == Gender::MALE ? 'ذكر' : 'أنثى',
             'is_block' => $this->is_block,
             'is_wait' => $this->is_wait,
             'phone_Code' => $this->phone_Code ?? "",

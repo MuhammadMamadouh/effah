@@ -158,4 +158,35 @@ class AuthController extends Controller
             ], 401);
         }
     }
+
+    public function confirmIdentity(Request $request)
+    {
+// dd($request->all());
+        $data = $this->validate($request, [
+            'passport_image' => 'nullable|image',
+            'identity_face' => 'nullable|image|mimes:jpeg,png,jpg|max:3048',
+            'identity_back' => 'nullable|image|mimes:jpeg,png,jpg|max:3048',
+        ],
+            [
+                'identity.max' => 'يجب ادخال صورتين كحد أقصى',
+                'identity.*.required' => 'يجب ادخال صورة',
+                'identity.*.image' => 'يجب ادخال صورة',
+                'identity.*.mimes' => 'الصورة غير صحيحة',
+            ]
+        );
+        if ($request->passport_image) {
+            auth()->user()->passport_image = 'storage/' . Storage::disk('public')->put('users', $data['passport_image']);
+
+        }
+        if ($request->identity_face) {
+            auth()->user()->identity_face = 'storage/' . Storage::disk('public')->put('users', $data['identity_face']);
+
+        }
+        if ($request->identity_back) {
+
+            auth()->user()->identity_back = 'storage/' . Storage::disk('public')->put('users', $data['identity_back']);
+        }
+        auth()->user()->save();
+        return response()->json(['success' => "ستتم المراجعة والرد عليك في أقرب وقت"]);
+    }
 }

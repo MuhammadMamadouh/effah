@@ -49,6 +49,7 @@
                                     <th class="">{{trans('main.points')}}</th>
 
                                     <th class="">التحكم</th>
+                                    <th class="">البيانات</th>
                                     <th><input type="checkbox" name="" id="check_all"></th>
 
 
@@ -85,6 +86,18 @@
                                         ايقاف
                                         @else
                                         تفعيل
+                                        @endif
+                                        <i class="mdi mdi-account-tie"></i>
+                                    </a>
+                                </td>
+                                <td class="">
+                                    <a href="{{route('users.show',$admin->id)}}" class="btn btn-success  btn-sm"
+                                        style="padding: 10px">
+
+                                        @if($admin->is_approved==0)
+                                        مراجعة البيانات
+                                        @else
+                                        تم قبول البيانات
                                         @endif
                                         <i class="mdi mdi-account-tie"></i>
                                     </a>

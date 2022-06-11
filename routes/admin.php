@@ -147,6 +147,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     /*====================================admin show users================*/
     Route::resource('users','AdminUsers');
     Route::post('users/savepoints', 'AdminUsers@savepoints')->name('savepoints');
+    Route::post('users/approve-user', 'AdminUsers@approveUser')->name('approve_user');
     Route::get('users/active/{id}','AdminUsers@is_active')->name('users.active');
     Route::get('ads/active/{id}','AdminUsers@is_activeAd')->name('ads.active');
 

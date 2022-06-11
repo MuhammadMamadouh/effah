@@ -47,16 +47,16 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('categories', 'API\CategoriesController@index');
     Route::get('categories/{id}/questions', 'API\CategoriesController@questions');
     Route::get('questions/{id}/answers', 'API\CategoriesController@answers');
-
     Route::post('questions/answer', 'API\CategoriesController@answerQuestion');
-
-    Route::get('users', 'API\UsersController@index');
-    Route::get('users/{id}', 'API\UsersController@show');
-
     Route::get('/profile', 'API\AuthController@showProfile');
-
     Route::post('/upload-photos', 'API\AuthController@uploadPhotos');
-
     Route::post('/update-bio', 'API\AuthController@updateBio');
+    Route::post('/users/confirm-identity', 'API\AuthController@confirmIdentity');
+
+    Route::group(['middleware' => 'approved'], function () {
+    // Route::middleware('Approved', function(){
+        Route::get('users', 'API\UsersController@index');
+        Route::get('users/{id}', 'API\UsersController@show');
+    });
 
 });

@@ -13,9 +13,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('admin/assets/images/favicon.png')}}">
     <title>
         @if(app()->isLocale('en'))
-            {{$settings->en_title}}
+        {{$settings->en_title}}
         @else
-            {{$settings->ar_title}}
+        {{$settings->ar_title}}
         @endif
     </title>
     <!-- Bootstrap Core CSS -->
@@ -30,18 +30,24 @@
     <!-- chartist CSS -->
     <link href="{{asset('/admin/plugins/chartist-js/dist/chartist.min.css')}}" rel="stylesheet">
     <link href="{{asset('/admin/plugins/chartist-js/dist/chartist-init.css')}}" rel="stylesheet">
-    <link href="{{asset('/admin/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css')}}" rel="stylesheet">
+    <link href="{{asset('/admin/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css')}}"
+        rel="stylesheet">
     <link href="{{asset('/admin/plugins/css-chart/css-chart.css')}}" rel="stylesheet">
     <link href="{{asset('toastr.min.css')}}" rel="stylesheet">
     <link href="{{asset('fancy_fileupload.css')}}" rel="stylesheet">
 
+
+    {{-- <script src="/path/to/cdn/jquery.min.js"></script> --}}
+
+
+
     <!-- Custom CSS -->
-    {{--    @if(app()->isLocale('en'))
-            <link href="{{asset('/admin/css/style-en.css')}}" rel="stylesheet">
-        @else--}}
+    {{-- @if(app()->isLocale('en'))
+    <link href="{{asset('/admin/css/style-en.css')}}" rel="stylesheet">
+    @else--}}
     <link href="{{asset('/admin/css/style.css')}}" rel="stylesheet">
     {{--
-             @endif--}}
+    @endif--}}
     <script src="{{asset('admin/plugins/datatables/datatables.css')}}"></script>
 
     <link href="{{asset('admin/css/mycss.css')}}" rel="stylesheet">
@@ -89,14 +95,14 @@
     }
     ?>
     @if(auth()->guard('admin')->user()->them==3)
-        <link href="{{asset('admin/css/colors/'.$theme)}}" id="theme" rel="stylesheet">
+    <link href="{{asset('admin/css/colors/'.$theme)}}" id="theme" rel="stylesheet">
     @else
-{{--
-        @php  $theme='blue-dark.css';@endphp
---}}
-        <link href="{{asset('admin/css/colors/'.$theme)}}" id="theme" rel="stylesheet">
+    {{--
+    @php $theme='blue-dark.css';@endphp
+    --}}
+    <link href="{{asset('admin/css/colors/'.$theme)}}" id="theme" rel="stylesheet">
     @endif
-<!-- toast CSS -->
+    <!-- toast CSS -->
     <link href="{{asset('admin/plugins/toast-master/css/jquery.toast.css')}}" rel="stylesheet">
     <!--alerts CSS -->
     <link href="{{asset('admin/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet" type="text/css">
@@ -112,107 +118,119 @@
 
 
 </head>
+
 <body class="fix-header fix-sidebar card-no-border">
 
-<!-- ============================================================== -->
-<!-- Preloader - style you can find in spinners.css -->
-<!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
 
-<div id="main-wrapper">
+    <div id="main-wrapper">
 
-    <!-- top navigation -->
-@include('admin.inc.navbar')
-<!-- /top navigation -->
+        <!-- top navigation -->
+        @include('admin.inc.navbar')
+        <!-- /top navigation -->
 
-    <!-- Sidebar Menu -->
-@include('admin.inc.sidebar')
-<!-- /Sidebar Menu -->
-    <div class="page-wrapper" >
-        <div class="container-fluid">
+        <!-- Sidebar Menu -->
+        @include('admin.inc.sidebar')
+        <!-- /Sidebar Menu -->
+        <div class="page-wrapper">
+            <div class="container-fluid">
 
-            <div class="row page-titles">
-                <div class="col-md-6 col-8 align-self-center">
-                    <h3 class="text-themecolor m-b-0 m-t-0">{{trans('main.main')}}</h3>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{route('home.index')}}">{{trans('main.main')}}</a></li>
-                        <li class="breadcrumb-item active">@yield('page-title')</li>
-                    </ol>
+                <div class="row page-titles">
+                    <div class="col-md-6 col-8 align-self-center">
+                        <h3 class="text-themecolor m-b-0 m-t-0">{{trans('main.main')}}</h3>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{route('home.index')}}">{{trans('main.main')}}</a>
+                            </li>
+                            <li class="breadcrumb-item active">@yield('page-title')</li>
+                        </ol>
+                    </div>
+                    <div class="col-md-6 col-4 align-self-center">
+                        <a href="{{route('setting.index')}}"
+                            class="right-side-toggle waves-effect waves-light btn-info btn-circle btn-sm pull-right m-l-10"><i
+                                class="ti-settings text-white"></i></a>
+                        <a href="{{ url()->previous() }}">
+                            <i titil="عودة"
+                                class=" fa fa-arrow-circle-o-left right-side-toggle waves-effect waves-light btn-success btn-circle btn-sm pull-right m-l-10"></i>
+                        </a>
+                        @yield('page-create')
+                    </div>
                 </div>
-                <div class="col-md-6 col-4 align-self-center">
-                    <a href="{{route('setting.index')}}" class="right-side-toggle waves-effect waves-light btn-info btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></a>
-                    <a  href="{{ url()->previous() }}">
-                        <i titil="عودة" class=" fa fa-arrow-circle-o-left right-side-toggle waves-effect waves-light btn-success btn-circle btn-sm pull-right m-l-10"></i>
-                    </a>
-                    @yield('page-create')
-                </div>
+
+
+
+                @include('admin.inc.flash')
+
+                <!-- page content -->
+                @yield('content')
+
+                <!-- /page content -->
             </div>
 
-
-
-        @include('admin.inc.flash')
-
-        <!-- page content -->
-        @yield('content')
-
-        <!-- /page content -->
+            <!-- footer -->
+            <footer class="footer text-center">
+                © 2022
+                @if(app()->isLocale('en'))
+                {{$settings->en_title}}
+                @else
+                {{$settings->ar_title}}
+                @endif
+            </footer>
+            <!-- End footer -->
         </div>
 
-        <!-- footer -->
-        <footer class="footer text-center">
-            © 2022
-            @if(app()->isLocale('en'))
-                {{$settings->en_title}}
-            @else
-                {{$settings->ar_title}}
-            @endif
-        </footer>
-        <!-- End footer -->
     </div>
 
-</div>
 
+    <script src="{{asset('/admin/plugins/jquery/jquery.min.js')}}"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="{{asset('/admin/plugins/bootstrap/js/tether.min.js')}}"></script>
+    <script src="{{asset('/admin/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="{{asset('/admin/js/jquery.slimscroll.js')}}"></script>
 
-<script src="{{asset('/admin/plugins/jquery/jquery.min.js')}}"></script>
-<!-- Bootstrap tether Core JavaScript -->
-<script src="{{asset('/admin/plugins/bootstrap/js/tether.min.js')}}"></script>
-<script src="{{asset('/admin/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
-<!-- slimscrollbar scrollbar JavaScript -->
-<script src="{{asset('/admin/js/jquery.slimscroll.js')}}"></script>
-<!--Wave Effects -->
-<script src="{{asset('/admin/js/waves.js')}}"></script>
-<!--Menu sidebar -->
-<script src="{{asset('/admin/js/sidebarmenu.js')}}"></script>
-<!--stickey kit -->
-<script src="{{asset('/admin/plugins/sticky-kit-master/dist/sticky-kit.min.js')}}"></script>
-<!--Custom JavaScript -->
-<script src="{{asset('/admin/js/custom.min.js')}}"></script>
-<!-- ============================================================== -->
-<!-- This page plugins -->
-<!-- ============================================================== -->
-<!-- chartist chart -->
-<script src="{{asset('/admin/plugins/chartist-js/dist/chartist.min.js')}}"></script>
-<script src="{{asset('/admin/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js')}}"></script>
-<!-- Chart JS -->
-<script src="{{asset('/admin/plugins/echarts/echarts-all.js')}}"></script>
-<!-- Chart JS -->
-<script src="{{asset('/admin/js/dashboard1.js')}}"></script>
-<!-- ============================================================== -->
-<!-- Style switcher -->
-<script src="{{asset('admin/plugins/datatables/datatables.js')}}"></script>
+    <script src="{{asset('admin/js/image-zoom.min.js')}}"></script>
 
-<!-- ============================================================== -->
-<script src="{{asset('/admin/plugins/styleswitcher/jQuery.style.switcher.js')}}"></script>
-<script src="{{asset('toastr.min.js')}}"></script>
+    <!--Wave Effects -->
 
-@yield('footer')
-<script src="{{asset('jquery.fileupload.js')}}"></script>
-<script src="{{asset('jquery.fancy-fileupload.js')}}"></script>
+    <script src="{{asset('/admin/js/waves.js')}}"></script>
+    <!--Menu sidebar -->
+    <script src="{{asset('/admin/js/sidebarmenu.js')}}"></script>
+    <!--stickey kit -->
+    <script src="{{asset('/admin/plugins/sticky-kit-master/dist/sticky-kit.min.js')}}"></script>
+    <!--Custom JavaScript -->
+    <script src="{{asset('/admin/js/custom.min.js')}}"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+    <!-- chartist chart -->
+    <script src="{{asset('/admin/plugins/chartist-js/dist/chartist.min.js')}}"></script>
+    <script src="{{asset('/admin/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js')}}">
+    </script>
+    <!-- Chart JS -->
+    <script src="{{asset('/admin/plugins/echarts/echarts-all.js')}}"></script>
+    <!-- Chart JS -->
+    <script src="{{asset('/admin/js/dashboard1.js')}}"></script>
+    <!-- ============================================================== -->
+    <!-- Style switcher -->
+    <script src="{{asset('admin/plugins/datatables/datatables.js')}}"></script>
 
-<!-- Toastr  -->
-<script src="{{asset('admin/plugins/toast-master/js/jquery.toast.js')}}"></script>
-<!-- Sweet-Alert  -->
-<script src="{{asset('admin/plugins/sweetalert/sweetalert.min.js')}}"></script>
+    <!-- ============================================================== -->
+    <script src="{{asset('/admin/plugins/styleswitcher/jQuery.style.switcher.js')}}"></script>
+    <script src="{{asset('toastr.min.js')}}"></script>
+
+    {{-- <script src="{{asset('jquery.fileupload.js')}}"></script>
+    <script src="{{asset('jquery.fancy-fileupload.js')}}"></script> --}}
+
+    {{--
+    <!-- Toastr  -->
+    <script src="{{asset('admin/plugins/toast-master/js/jquery.toast.js')}}"></script>
+    <!-- Sweet-Alert  -->
+    <script src="{{asset('admin/plugins/sweetalert/sweetalert.min.js')}}"></script> --}}
+    @yield('footer')
 
 </body>
-@toastr_render
+{{-- @toastr_render --}}
+
 </html>

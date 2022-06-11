@@ -57,15 +57,11 @@ class AdminUsers extends Controller
      */
     public function show($id)
     {
-        //
+        $user=User::findOrFail($id);
+        return view('admin.users.show', compact('user'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         //
@@ -124,7 +120,27 @@ class AdminUsers extends Controller
             $user->points=$request->points;
             $user->save();
         }
-        toastr()->success('تمت العملية بنجاح !','تهانينا');
+        // toastr()->success('تمت العملية بنجاح !','تهانينا');
+        return redirect(route('users.index'))->with('success','تمت العملية بنجاح !');
+    }
+    public function approveUser(Request $request){
+// dd($request->all());
+$data = $this->validate($request, [
+    'user_id' => 'required|numeric|exists:users,id',
+    'id_no' => 'required|string|unique:users,idNumber',
+],
+    [
+        'user_id.exists' => 'يجب ادخال صورتين كحد أقصى',
+        'id_no.*.required' => 'رقم البطاقة مطلوب',
+        'id_no.*.unique' => 'رقم البطاقة مسحل من قبل',
+
+    ]
+);
+            $user=User::findOrFail($request->user_id);
+            $user->idNumber=$request->id_no;
+            $user->is_approved=true;
+            $user->save();
+        // toastr()->success('تم تأكيد الحساب !','تهانينا');
         return redirect(route('users.index'))->with('success','تمت العملية بنجاح !');
     }
 }

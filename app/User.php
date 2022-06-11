@@ -31,7 +31,7 @@ class User extends Authenticatable
         'is_block', 'is_wait', 'phone_Code', 'phone', 'country_id', 'gov_id',
         'city_id', 'lastLoginAt', 'religion_id', 'password',
         'about_you', 'about_partner', 'district_id', 'education_id', 'universty_id', 'college_id',
-        'birth_date',
+        'birth_date', 'points'
     ];
 
     public function universty(){

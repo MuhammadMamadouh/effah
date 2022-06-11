@@ -116,4 +116,15 @@ class AdminUsers extends Controller
     {
         //
     }
+
+    public function savepoints(Request $request){
+        // dd($request->all());
+        foreach($request->users as $user){
+            $user=User::findOrFail($user);
+            $user->points=$request->points;
+            $user->save();
+        }
+        toastr()->success('تمت العملية بنجاح !','تهانينا');
+        return redirect(route('users.index'))->with('success','تمت العملية بنجاح !');
+    }
 }

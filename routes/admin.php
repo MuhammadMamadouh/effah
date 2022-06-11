@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Support\Facades\Route;
+
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Config::set('auth.defines', 'admin');
     // Route::resource('home','AdminHomeController');
@@ -143,6 +146,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::any('logout', 'AdminAuth@logout')->name('admin.logout');
     /*====================================admin show users================*/
     Route::resource('users','AdminUsers');
+    Route::post('users/savepoints', 'AdminUsers@savepoints')->name('savepoints');
     Route::get('users/active/{id}','AdminUsers@is_active')->name('users.active');
     Route::get('ads/active/{id}','AdminUsers@is_activeAd')->name('ads.active');
 

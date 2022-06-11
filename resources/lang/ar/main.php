@@ -425,7 +425,7 @@ return[
     'My_followeds'=>'  المتابعون  ',
     'report'=>'  بلاغ  ',
 
-
+'points'=>' نقاط ',
 
 
 

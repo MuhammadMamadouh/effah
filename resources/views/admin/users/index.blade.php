@@ -5,146 +5,154 @@
 
 
 @section('page-title')
-    {{-- عنوان الصفحة --}}
-    {{trans('main.Users')}}
+{{-- عنوان الصفحة --}}
+{{trans('main.Users')}}
 @endsection
 
 
 @section('page-create')
-    {{-- اضافة زرار--}}
+{{-- اضافة زرار--}}
 
 @endsection
 
 @section('content')
 
 
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-block">
-                    <h4 class="card-title">{{trans('main.Export')}}</h4>
-                    <div class="table-responsive m-t-40">
-                        <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-block">
+                <h4 class="card-title">{{trans('main.Export')}}</h4>
+                <div class="table-responsive m-t-40">
+                    <form action="{{url("admin/users/savepoints")}}" method="post" class="form-horizontal">
+                        @csrf
+                    <table id="example23" class="display nowrap table table-hover table-striped table-bordered"
+                        cellspacing="0" width="100%">
 
-                            <?php
-                            $count=1;
-                            ?>
+                            <div class="form-group">
+                                <label class="col-">النقاط</label>
+                                <input type="text" name="points">
+                                <button type="submit" class="btn btn-primary">حفظ</button>
+                            </div>
                             @if($users->count()!=null)
-                                <thead>
+                            <thead>
                                 <tr>
                                     <th>
                                         #
                                     </th>
 
                                     <th class="">{{trans('main.User_name')}} </th>
-                                    <th class="">الاسم  الثاني </th>
+                                    <th class="">الاسم الثاني </th>
                                     <th class="">النوع </th>
                                     <th class="">{{trans('main.mobile')}} </th>
                                     <th class="">{{trans('main.Admin_image')}}</th>
+                                    <th class="">{{trans('main.points')}}</th>
 
                                     <th class="">التحكم</th>
-
+                                    <th><input type="checkbox" name="" id="check_all"></th>
 
 
                                 </tr>
-                                </thead>
-                                @foreach($users as $admin)
+                            </thead>
+                            @foreach($users as $admin)
 
-                                    <tr>
-                                        <td class=""> {{$count++}}</td>
-                                        <td class="">{{$admin->frName}}</td>
-                                        <td class="">@if($admin->lsName){{$admin->lsName}}@else غير محدد @endif </td>
-                                        <td class="">
-                                            @if($admin->gender==1)<span class="badge badge-primary">شاب</span>
-                                            @else
-                                                <span class="badge badge-danger">فتاة</span>
-                                            @endif
-                                        </td>
-                                        <td class="">{{$admin->phone}}</td>
+                            <tr>
+                                <td class=""> {{$loop->iteration}}</td>
+                                <td class="">{{$admin->frName}}</td>
+                                <td class="">@if($admin->lsName){{$admin->lsName}}@else غير محدد @endif </td>
+                                <td class="">
+                                    @if($admin->gender==1)<span class="badge badge-primary">شاب</span>
+                                    @else
+                                    <span class="badge badge-danger">فتاة</span>
+                                    @endif
+                                </td>
+                                <td class="">{{$admin->phone}}</td>
 
-                                        <td class="">
-                                            @if($admin->image)
-                                            <img src="{{asset('/'.$admin->image)}}" width="50px" height="50px">
-                                                @else
-                                                <span style="color: #9d0d0d" > لم يحدد صورة شخصية</span>
+                                <td class="">
+                                    @if($admin->image)
+                                    <img src="{{asset('/'.$admin->image)}}" width="50px" height="50px">
+                                    @else
+                                    <span style="color: #9d0d0d"> لم يحدد صورة شخصية</span>
 
-                                                @endif
-                                        </td><td class="">
-                                            <a href="{{route('users.active',$admin->id)}}" class="btn btn-success  btn-sm"  style="padding: 10px">
+                                    @endif
+                                </td>
+                                <td class="">{{$admin->points}}</td>
+                                <td class="">
+                                    <a href="{{route('users.active',$admin->id)}}" class="btn btn-success  btn-sm"
+                                        style="padding: 10px">
 
-                                                @if($admin->is_block==0)
-                                                    ايقاف
-                                                @else
-                                                    تفعيل
-                                                @endif
-                                                <i class="mdi mdi-account-tie"></i>
-                                            </a>
-                                        </td>
-                                      {{--  <td class="">@if($admin->type==1)عميل @else
-                                            بائع
-                                                                       @endif
-                                        </td>--}}
+                                        @if($admin->is_block==0)
+                                        ايقاف
+                                        @else
+                                        تفعيل
+                                        @endif
+                                        <i class="mdi mdi-account-tie"></i>
+                                    </a>
+                                </td>
+                                <td><input class="check" type="checkbox" name="users[]" value="{{$admin->id}}"></td>
+                                {{-- <td class="">@if($admin->type==1)عميل @else
+                                    بائع
+                                    @endif
+                                </td>--}}
 
 
-                                        {{--  <td class="">
-                                              <button class="btn btn-sm btn-danger delete"
-                                                      id="{{$admin->id}}">
-                                                  <i class="fa fa-trash-alt"></i> {{trans('main.Delete')}}
-                                              </button>
-                                          </td>
-                                          <td class="text-right">
-                                              <a class="btn btn-sm btn-warning "
-                                                 href="{{route('admins.edit',$admin->id)}}">
-                                                  <i class="mdi mdi-account-settings"></i>{{trans('main.Edit')}}
-                                              </a>
-                                          </td>--}}
-                                    </tr>
+                                {{-- <td class="">
+                                    <button class="btn btn-sm btn-danger delete" id="{{$admin->id}}">
+                                        <i class="fa fa-trash-alt"></i> {{trans('main.Delete')}}
+                                    </button>
+                                </td>
+                                <td class="text-right">
+                                    <a class="btn btn-sm btn-warning " href="{{route('admins.edit',$admin->id)}}">
+                                        <i class="mdi mdi-account-settings"></i>{{trans('main.Edit')}}
+                                    </a>
+                                </td>--}}
+                            </tr>
 
-                                @endforeach
+                            @endforeach
 
                             @else
 
-                                {{trans('main.no_row')}}
+                            {{trans('main.no_row')}}
 
                             @endif
-
                         </table>
-                    </div>
+                    </form>
                 </div>
             </div>
-
         </div>
+
     </div>
+</div>
 
 
 
 @endsection
 
 @section('footer')
-    <script>
-        $(document).ready(function () {
+<script>
+    $(document).ready(function () {
 
 
         });
-    </script>
+</script>
 
-    <!-- start - This is for export functionality only -->
-    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
-    <script>
-        $.ajaxSetup({
+<!-- start - This is for export functionality only -->
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+<script>
+    $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-    </script>
-    <script>
-        $(document).ready(function () {
+</script>
+<script>
+    $(document).ready(function () {
             $('#example23').DataTable({
                 dom: 'Bfrtip',
 
@@ -174,7 +182,10 @@
             });
 
             //End
-            $(document).on('click', '.delete', function () {
+            $(document).on('click', '#check_all', function () {
+                $('.check').attr('checked', this.checked);
+            });
+                $(document).on('click', '.delete', function () {
                 var id = $(this).attr('id');
                 console.log(id)
                 swal({
@@ -219,5 +230,5 @@
 
 
         });//end jquery
-    </script>
+</script>
 @endsection

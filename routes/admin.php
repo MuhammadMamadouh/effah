@@ -220,5 +220,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     /*================Admin payments =========================*/
     Route::resource('payments','AdminPaymentsController');
     Route::post('payments/delete','AdminPaymentsController@delete')->name('payments.delete');
+
+    /*================ Points =========================*/
+    Route::resource('points','PointController');
+
+    /*================ reports =========================*/
+    Route::resource('reports','ReportController');
     /*===================tasks=============*/
+
 });

@@ -8,7 +8,7 @@ class Question extends Model
 {
     public $table = 'questions';
 
-    protected $fillable = ['id', 'content', 'is_active', 'gender', 'religion', 'category_id'];
+    protected $fillable = ['id', 'content', 'is_active', 'gender', 'religion', 'category_id', 'can_skip'];
 
     public function category(){
         return $this->belongsTo(Category::class, 'category_id');

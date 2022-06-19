@@ -6,6 +6,7 @@ use App\Models\Ad;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Notifications\AccountApprovedNotifiction;
 use Illuminate\Support\Facades\File;
 
 
@@ -140,6 +141,8 @@ $data = $this->validate($request, [
             $user->idNumber=$request->id_no;
             $user->is_approved=true;
             $user->save();
+            $user->notify(new AccountApprovedNotifiction());
+
         // toastr()->success('تم تأكيد الحساب !','تهانينا');
         return redirect(route('users.index'))->with('success','تمت العملية بنجاح !');
     }

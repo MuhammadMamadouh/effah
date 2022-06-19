@@ -44,7 +44,13 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     });
 
+    // Route::group(['middleware' => 'completed_profile'], function () {
+
     Route::get('categories', 'API\CategoriesController@index');
+    Route::get('notifications', 'API\AuthController@notifications');
+    Route::post('notifications/{id}', 'API\AuthController@read_notification');
+    Route::get('my-points', 'API\PointsController@myPoints');
+    Route::post('get-points', 'API\PointsController@getPoints');
     Route::get('categories/{id}/questions', 'API\CategoriesController@questions');
     Route::get('questions/{id}/answers', 'API\CategoriesController@answers');
     Route::post('questions/answer', 'API\CategoriesController@answerQuestion');
@@ -52,11 +58,19 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/upload-photos', 'API\AuthController@uploadPhotos');
     Route::post('/update-bio', 'API\AuthController@updateBio');
     Route::post('/users/confirm-identity', 'API\AuthController@confirmIdentity');
+// });
 
     Route::group(['middleware' => 'approved'], function () {
-    // Route::middleware('Approved', function(){
-        Route::get('users', 'API\UsersController@index');
-        Route::get('users/{id}', 'API\UsersController@show');
+        Route::get('users', 'API\UsersController@index')->name('users.index');
+        Route::get('users/{id}', 'API\UsersController@show')->name('user.profile');
+        Route::post('users/{id}/sendLove', 'API\RelationshipController@sendLove');
+        Route::post('users/{id}/viewRequest', 'API\RelationshipController@viewRequestLove');
+        Route::post('users/{id}/acceptLove', 'API\RelationshipController@acceptLove');
+        Route::post('users/{id}/refuseLove', 'API\RelationshipController@refuseLove');
+        Route::post('users/{id}/showParentInfo', 'API\RelationshipController@showParentInfo')->name('users.showParentInfo');
+
+        Route::post('reports/{id}', 'API\ReportController@store');
+        Route::get('reports', 'API\ReportController@index');
     });
 
 });

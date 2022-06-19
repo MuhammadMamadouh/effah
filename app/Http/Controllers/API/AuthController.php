@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationRequest;
+use App\Http\Resources\NotificationResource;
 use App\Http\Resources\UserResource;
 use App\Http\Services\SMSService;
 use App\Models\VerificationCode;
@@ -161,7 +162,6 @@ class AuthController extends Controller
 
     public function confirmIdentity(Request $request)
     {
-// dd($request->all());
         $data = $this->validate($request, [
             'passport_image' => 'nullable|image',
             'identity_face' => 'nullable|image|mimes:jpeg,png,jpg|max:3048',
@@ -189,4 +189,23 @@ class AuthController extends Controller
         auth()->user()->save();
         return response()->json(['success' => "ستتم المراجعة والرد عليك في أقرب وقت"]);
     }
+
+    public function notifications(){
+        $notifications = auth()->user()->unreadNotifications()->orderBy('created_at', 'desc')
+        ->get(['id','data', 'created_at'])->map(function($item){
+            return [
+                'id' => $item['id'],
+                'message' => $item->data['message'],
+                'link' => $item->data['link'],
+                'created_at' => $item->created_at->format('Y-m-d H:i:s'),
+            ];
+        });
+        return response()->json($notifications);
+    }
+    public function read_notification($id){
+        auth()->user()->notifications()->where('id', $id)
+        ->first()->markAsRead();
+        return response()->json(['success' => "تمت القراءة للإشعار"]);
+    }
+
 }

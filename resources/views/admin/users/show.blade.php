@@ -109,7 +109,7 @@
                             <div class="form-group">
                                 <label>المنطقة </label>
                                 <input type="text" name="name" id="ar_title" disabled
-                                    value="{{$user->district->name  }}" class="form-control" />
+                                    value="{{$user->district ? $user->district->name : null  }}" class="form-control" />
                             </div>
                         </div>
 
@@ -120,25 +120,27 @@
                                     value="{{$user->religion->name  }}" class="form-control" />
                             </div>
                         </div>
+
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>المستوى التعليمي </label>
                                 <input type="text" name="name" id="ar_title" disabled
-                                    value="{{$user->education->name  }}" class="form-control" />
+                                    value="{{$user->education ? $user->education->name: ''  }}" class="form-control" />
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>الجامعة </label>
                                 <input type="text" name="name" id="ar_title" disabled
-                                    value="{{$user->universty->name  }}" class="form-control" />
+                                    value="{{$user->universty ? $user->universty->name : null  }}"
+                                    class="form-control" />
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>الكلية </label>
-                                <input type="text" name="name" id="ar_title" disabled value="{{$user->college->name  }}"
-                                    class="form-control" />
+                                <input type="text" name="name" id="ar_title" disabled
+                                    value="{{$user->college ? $user->college->name :''  }}" class="form-control" />
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -149,19 +151,20 @@
                                     class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-3">
+
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>صورة تأكيد الهوية 1- </label>
                                 <img src="{{asset($user->identity_face)}}">
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>صورة تأكيد الهوية 2- </label>
                                 <img src="{{asset($user->identity_back)}}">
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>صورة جواز السفر- </label>
                                 <img src="{{asset($user->passport_image)}}">
@@ -169,6 +172,20 @@
                         </div>
 
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>عن المستخدم </label>
+                                <textarea disabled class="form-control">{{$user->about_you}}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>عن الشريك </label>
+                                <textarea disabled class="form-control">{{$user->about_partner}}</textarea
+                    </div>
+                {{-- </div> --}}
+{{-- </div> --}}
                     {{-- @if(!$user->approved) --}}
                     <form action="{{route('approve_user')}}" method="post">
                         @csrf
